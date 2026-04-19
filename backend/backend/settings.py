@@ -9,8 +9,18 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 from pathlib import Path
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER= 'adrianfalcones69@gmail.com'
+EMAIL_HOST_PASSWORD= 'umbvwskalwtlorzg'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,11 +61,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-# Permitir peticiones desde Angular en desarrollo
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -124,3 +129,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# Permitir que Angular (puerto 4200) se conecte
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
+
+
